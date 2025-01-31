@@ -1,0 +1,4 @@
+# React Router
+/node_modules/
+/.react-router/
+/build/
