@@ -15,7 +15,12 @@
     "isbot": "^5.1.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.4"
+    "react-router": "^7.1.4",
+    "@farcaster/hub-nodejs": "^0.12.7",
+    "@neynar/nodejs-sdk": "^2.9.0",
+    "@neynar/react": "^0.9.7",
+    "qrcode.react": "^4.2.0",
+    "viem": "^2.22.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
