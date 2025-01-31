@@ -1,0 +1,11 @@
+{
+  "name": "aivatar",
+  "version": "1.0.0",
+  "description": "An AI powered Web 3 Avatar based on the sentiment of your latest farcaster posts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
