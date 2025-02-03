@@ -1,0 +1,1 @@
+ALTER TABLE "app"."WebhookSecret" ADD COLUMN "webhook_id" varchar;

@@ -6,4 +6,7 @@ export default [index("routes/home.tsx"),
         route("updateLocation", "./routes/api/updateLocation.tsx"),
         route("getSigner", "./routes/api/getSigner.tsx"),
       ]),
+    ...prefix("webhooks", [
+      route("castCreated", "./routes/webhooks/castCreated.tsx"),
+    ])
 ] satisfies RouteConfig;

@@ -5,13 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
+  useRouteLoaderData,
 } from 'react-router';
 
 import type { Route } from './+types/root';
 import './app.css';
-import { ConfigProvider } from './contexts/Config';
-import NeynarProvider from './contexts/Neynar';
+import { Providers } from './providers/Providers';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -26,6 +25,13 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const meta: Route.MetaFunction = () => [
+  {
+    title: 'AIVATAR',
+    description: 'An Agentic PFP',
+  }
+]
+
 export function loader() {
   const neynarClientId = process.env.NEYNAR_CLIENT_ID;
 
@@ -37,7 +43,9 @@ export function loader() {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const value = useLoaderData<ReturnType<typeof loader>>();
+  
+  const value = useRouteLoaderData<ReturnType<typeof loader>>('root');
+  
   return (
     <html lang="en">
       <head>
@@ -47,9 +55,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <ConfigProvider value={value}>
-          <NeynarProvider>{children}</NeynarProvider>
-        </ConfigProvider>
+        <Providers value={value || { }} children={children} />
         <ScrollRestoration />
         <Scripts />
       </body>

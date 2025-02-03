@@ -39,6 +39,9 @@ export default function NeynarProvider({
 }>) {
   const { neynarClientId: clientId } = useConfig();
   const [user, setUser] = useState<INeynarAuthenticatedUser>();
+  if (!clientId) {
+    return null;
+  }
 
   return (
     <NeynarContextProvider
@@ -47,11 +50,11 @@ export default function NeynarProvider({
         defaultTheme: Theme.Light,
         eventsCallbacks: {
           onAuthSuccess: (data) => {
-            debugger;
+            
             setUser(data.user);
           },
           onSignout: () => {
-            debugger;
+            
             setUser(undefined);
           },
         },

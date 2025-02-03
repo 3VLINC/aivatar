@@ -1,9 +1,8 @@
-import type { Route } from "./+types/home";
-import type { MetaArgs } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from '@heroui/react';
 import * as QRCode from "qrcode.react";
+import { useFarcasterContext } from "~/providers/Preload";
 
 interface FarcasterUser {
   signer_uuid: string;
@@ -11,13 +10,6 @@ interface FarcasterUser {
   status: string;
   signer_approval_url?: string;
   fid?: number;
-}
-
-export function meta(_: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
 }
 
 export default function Home() {
@@ -102,12 +94,14 @@ export default function Home() {
     try {
       const response = await axios.post("/api/generateSigner");
       if (response.status === 200) {
-        console.log("response data", response.data);
+
+        const data: FarcasterUser = response.data;
+        console.log("response data", data);
         localStorage.setItem(
           LOCAL_STORAGE_KEYS.FARCASTER_USER,
-          JSON.stringify(response.data)
+          JSON.stringify(data)
         );
-        setFarcasterUser(response.data);
+        setFarcasterUser(data);
       }
     } catch (error) {
       console.error("API Call failed", error);

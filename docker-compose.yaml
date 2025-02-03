@@ -1,0 +1,15 @@
+# Docker compose that loads up postgres
+volumes:
+  data:
+services:
+  db:
+    image: postgres:16.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: app
+    ports:
+      - '5432:5432'
+    volumes:
+      - data:/var/lib/postgresql/data

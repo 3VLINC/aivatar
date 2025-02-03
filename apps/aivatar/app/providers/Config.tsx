@@ -1,12 +1,16 @@
-import { createContext, useContext,type ReactNode } from 'react';
+import { createContext, useContext,type PropsWithChildren,type ReactNode } from 'react';
 
-interface ConfigContextProps {
-    neynarClientId: string
+export interface ConfigContextProps {
+    neynarClientId?: string
 }
 
 const ConfigContext = createContext<ConfigContextProps | undefined>(undefined);
 
-export const ConfigProvider = ({ children, value }: { children: ReactNode, value: ConfigContextProps }) => {
+export type ConfigProviderProps = PropsWithChildren<{
+    value: ConfigContextProps
+}>;
+
+export const ConfigProvider = ({ children, value }: ConfigProviderProps) => {
 
     return (
         <ConfigContext.Provider value={value}>

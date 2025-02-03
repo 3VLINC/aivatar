@@ -1,0 +1,31 @@
+{
+  "name": "drizzle",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "library/drizzle/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project drizzle --web",
+  "targets": {
+    "db:generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}/src",
+        "command": "npx drizzle-kit generate --config drizzle.config.ts"
+      }
+    },
+    "db:migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}/src",
+        "command": "npx drizzle-kit migrate --config drizzle.config.ts"
+      }
+    },
+    "db:check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}/src",
+        "command": "npx drizzle-kit check --config drizzle.config.ts"
+      }
+    }
+  }
+}
