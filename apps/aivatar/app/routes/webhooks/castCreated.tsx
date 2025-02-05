@@ -3,6 +3,7 @@ import { verifyNeynarWebhook } from "~/utils/verifyNeynarWebhook";
 import { type WebhookCastCreated } from '@neynar/nodejs-sdk';
 import { casts, db, webhooks, webhookSecrets } from "@aivatar/drizzle";
 import { eq, and } from "drizzle-orm";
+import { invokeAgent } from "~/utils/invokeAgent";
 
 export const action = async ({ request }: Route.LoaderArgs) => {
     
@@ -59,6 +60,10 @@ export const action = async ({ request }: Route.LoaderArgs) => {
     })
     
     await console.log('Cast stored', verifiedData.data.hash);
+
+    const sentiment = await invokeAgent(verifiedData.data.text);
+
+    console.log('Sentiment:', sentiment);
     
 }
 

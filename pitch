@@ -1,0 +1,17 @@
+agentic avatar.
+6551 avatar equippable.
+Base character as your PFP, equip them with an expression.
+Connect to your farcaster account.
+Read latest cast and determine your sentiment.
+Update the onchain metadata to change the expression / how it renders.
+Update the farcaster profile.
+Take it a step further and use the agent to start recruiting farcaster influencers.
+Reach out to them via DCs and pitch them on the project.
+If they agree to make their PFP our character they start earning a token.
+Periodically the agent checks to make sure the pfp hasn't changed and awards tokens accordingly.
+Take the idea of like onchain sports broadcasting.
+
+How to have different triggers?
+- Webhooks coming from farcaster
+- Autonomous thinking for outreach via chat
+- Periodic checks and doing an image comparison (farcaster doesn't have NFT PFPs so maybe image matching).
