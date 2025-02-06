@@ -20,7 +20,7 @@ export async function invokeSentimentAgent(message: string) {
       stateModifier: async (state: typeof MessagesAnnotation.State) => {
         return [
           new SystemMessage(
-            'You are an insightful person and are good at reading peoples emotions. Read the follow message and try and guess what emotion the writer is feeling.'
+            'You are an insightful person and are good at reading peoples emotions. Read the following message and try and guess what emotion the writer is feeling.'
           ),
           ...state.messages,
         ];
@@ -53,10 +53,12 @@ export async function invokeSentimentAgent(message: string) {
     });
 
     console.log('tx hash', contractInvocation.getTransactionHash());
-    await contractInvocation.wait({
-      intervalSeconds: 5,
-      timeoutSeconds: 60,
-    });
+    await contractInvocation
+      .wait({
+        intervalSeconds: 5,
+        timeoutSeconds: 60,
+      })
+      .catch((err) => console.error(err));
 
     return `The contract call was invoked updating tokenId: ${tokenId} with expression: ${expression}\n tx: ${contractInvocation.getTransactionHash()}`;
 

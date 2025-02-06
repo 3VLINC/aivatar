@@ -7,11 +7,12 @@ import {
 } from '@react-router/dev/routes';
 
 export default [
-  index('routes/home.tsx'),
+  index('routes/index/index.tsx'),
   ...prefix('api', [
     route('generateSigner', './routes/api/generateSigner.tsx'),
     route('updateLocation', './routes/api/updateLocation.tsx'),
     route('getSigner', './routes/api/getSigner.tsx'),
+    route('getUserData', './routes/api/getUserData.tsx'),
     route('invokeSentimentAgent', './routes/api/invokeSentimentAgent.tsx'),
   ]),
   ...prefix('webhooks', [
@@ -22,4 +23,7 @@ export default [
     route(':symbol/schema.json', './routes/erc721/schema.tsx'),
     route(':symbol/token/:tokenId.json', './routes/erc721/token.tsx'),
   ]),
+  ...prefix('.well-known', [
+    route('farcaster.json', './routes/.well-known/farcaster.tsx'),
+  ])
 ] satisfies RouteConfig;

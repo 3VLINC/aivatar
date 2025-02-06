@@ -10,7 +10,9 @@ import {
 
 import type { Route } from './+types/root';
 import './app.css';
+import '@farcaster/auth-kit/styles.css';
 import { Providers } from './providers/Providers';
+import { ConfigProvider, type ConfigContextProps } from './providers/Config';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -29,23 +31,38 @@ export const meta: Route.MetaFunction = () => [
   {
     title: 'AIVATAR',
     description: 'An Agentic PFP',
-  }
-]
+  },
+];
 
-export function loader() {
+export function loader({ request }: Route.LoaderArgs): ConfigContextProps {
+  const url = new URL(request.url);
   const neynarClientId = process.env.NEYNAR_CLIENT_ID;
 
   if (!neynarClientId) {
     throw new Error('Missing Neynar Client ID');
   }
 
-  return { neynarClientId };
+  const siweUri = new URL(`${url.protocol}//${url.hostname}`);
+  siweUri.protocol = 'https';
+  console.log('siweUri', siweUri.toString());
+  return {
+    neynarClientId,
+    auth: {
+      rpcUrl: 'https://mainnet.optimism.io',
+      domain: url.hostname,
+      siweUri: siweUri.toString(),
+    },
+  };
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  
   const value = useRouteLoaderData<ReturnType<typeof loader>>('root');
-  
+
+  const content = value ? (
+    <ConfigProvider value={value}>
+      <Providers children={children} />
+    </ConfigProvider>
+  ) : null;
   return (
     <html lang="en">
       <head>
@@ -54,8 +71,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Providers value={value || { }} children={children} />
+      <body className="dark text-foreground bg-background">
+        {content}
         <ScrollRestoration />
         <Scripts />
       </body>

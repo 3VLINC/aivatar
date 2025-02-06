@@ -2,16 +2,18 @@ import { db, users, webhooks, webhookSecrets } from '@aivatar/drizzle';
 import type { LoaderFunctionArgs } from 'react-router';
 import { getNeynarClient } from '~/clients/getNeynarSdk';
 import { eq, and } from 'drizzle-orm';
+import type { FarcasterUser } from '~/interface';
 
-export async function loader({ request }: LoaderFunctionArgs) {
-
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<FarcasterUser> {
   const url = new URL(request.url);
   const signerUuid = url.searchParams.get('signer_uuid');
 
   const webhookUrl = new URL(`https://${url.host}/webhooks/cast.created`);
 
   if (!signerUuid) {
-    return { error: 'signer_uuid is required' };
+    throw new Error('signer_uuid is required');
   }
 
   const neynarClient = await getNeynarClient();
@@ -54,31 +56,30 @@ export async function loader({ request }: LoaderFunctionArgs) {
         `Failed to publish cast.created webhook for signer: ${signerUuid}\n reason: webhook_id not found`
       );
     }
-    console.log(publishWebhookResult);
 
     const webhookId = publishWebhookResult.webhook?.webhook_id;
     if (webhookId) {
-
       await db.insert(webhooks).values({
         id: webhookId,
         fid: BigInt(signer.fid),
         type: 'cast.created',
       });
-      
-      await db.insert(webhookSecrets).values(publishWebhookResult.webhook.secrets.map(
-        ({ uid, created_at, deleted_at, expires_at, updated_at, value}) => ({
-          uid,
-          webhookId,
-          created_at,
-          deleted_at,
-          expires_at,
-          updated_at,
-          value
-        })
-      ))
+
+      await db.insert(webhookSecrets).values(
+        publishWebhookResult.webhook.secrets.map(
+          ({ uid, created_at, deleted_at, expires_at, updated_at, value }) => ({
+            uid,
+            webhookId,
+            created_at,
+            deleted_at,
+            expires_at,
+            updated_at,
+            value,
+          })
+        )
+      );
     }
   }
-
 
   await db
     .insert(users)
@@ -89,5 +90,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .onConflictDoNothing()
     .execute();
 
-  return signer;
+  return {
+    signer_uuid: signer.signer_uuid,
+    public_key: signer.public_key,
+    status: signer.status,
+    signer_approval_url: signer.signer_approval_url,
+    fid: signer.fid.toString(),
+  };
 }

@@ -13,7 +13,7 @@ export default defineConfig({
       key: readFileSync(resolve(__dirname, './dev/origin.key')),
       cert: readFileSync(resolve(__dirname, './dev/origin.cert')),
     },
-    port: 8443,
+    port: 443,
     proxy: {
       // ...
     },

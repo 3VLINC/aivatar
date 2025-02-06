@@ -1,9 +1,16 @@
+import type { Hex } from "viem";
+
 export interface FarcasterUser {
   signer_uuid: string;
   public_key: string;
   status: string;
   signer_approval_url?: string;
-  fid?: number;
+  fid?: string;
+}
+
+export interface SignedKeyResult {
+  deadline: number;
+  signature: Hex;
 }
 
 export type TokenSymbol = 'AIVATAR';

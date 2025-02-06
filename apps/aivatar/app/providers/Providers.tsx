@@ -1,11 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ConfigProvider, type ConfigProviderProps } from './Config';
+import { useEffect, useState, type PropsWithChildren } from 'react';
+import { useConfig } from './Config';
 import NeynarProvider from './Neynar';
 import { Preload } from './Preload';
+import { HeroUIProvider } from '@heroui/react';
+import { Auth } from './Auth';
+import { AuthKitProvider } from '@farcaster/auth-kit';
 
-export const Providers = ({ children, value }: ConfigProviderProps) => {
+export const Providers = ({ children }: PropsWithChildren) => {
   const [ClientComponent, setClientComponent] = useState<React.ComponentType<{
     children: React.ReactNode;
   }> | null>(null);
@@ -19,17 +22,27 @@ export const Providers = ({ children, value }: ConfigProviderProps) => {
     loadComponent();
   }, []);
 
+  const { auth } = useConfig();
+
   if (!ClientComponent) {
     return null;
   }
 
+  if (!auth) {
+    return null;
+  }
+
   return (
-    <ConfigProvider value={value}>
+    <HeroUIProvider>
       <NeynarProvider>
         <ClientComponent>
-          <Preload>{children}</Preload>
+          <Preload>
+            <AuthKitProvider config={auth}>
+              <Auth>{children}</Auth>
+            </AuthKitProvider>
+          </Preload>
         </ClientComponent>
       </NeynarProvider>
-    </ConfigProvider>
+    </HeroUIProvider>
   );
 };
