@@ -1,15 +1,16 @@
 import { ChatOpenAI } from '@langchain/openai';
 import { writeFileSync } from 'fs';
-import { getConfig } from './getConfig';
 import {
   AgentKit,
   cdpApiActionProvider,
   cdpWalletActionProvider,
-  CdpWalletProvider,
   walletActionProvider,
 } from '@coinbase/agentkit';
 import { getLangChainTools } from '@coinbase/agentkit-langchain';
 import { type CreateReactAgentParams } from '@langchain/langgraph/prebuilt';
+import { agenticUpdate } from '../tools/agenticUpdate';
+import { getWallet } from './getWallet';
+import { getConfig } from './getConfig';
 
 /**
  * Initialize the agent with CDP Agentkit
@@ -18,18 +19,14 @@ import { type CreateReactAgentParams } from '@langchain/langgraph/prebuilt';
  */
 export async function getAgentConfig(): Promise<CreateReactAgentParams> {
   try {
-    const config = getConfig();
-
-    const { cdpWalletDataFile } = config;
-
     // Initialize LLM
     const llm = new ChatOpenAI({
       model: 'gpt-4o-mini',
     });
 
-    // Configure CDP Wallet Provider
+    const config = getConfig();
 
-    const walletProvider = await CdpWalletProvider.configureWithWallet(config);
+    const { walletProvider } = await getWallet();
 
     // Initialize AgentKit
     const agentkit = await AgentKit.from({
@@ -47,14 +44,11 @@ export async function getAgentConfig(): Promise<CreateReactAgentParams> {
           apiKeyName: config.apiKeyName,
           apiKeyPrivateKey: config.apiKeyPrivateKey,
         }),
+        agenticUpdate,
       ],
     });
 
     const tools = await getLangChainTools(agentkit);
-
-    const exportedWallet = await walletProvider.exportWallet();
-
-    writeFileSync(cdpWalletDataFile, JSON.stringify(exportedWallet));
 
     return {
       llm,

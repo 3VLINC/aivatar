@@ -34,9 +34,9 @@ export type SupportedChains = typeof baseSepolia | typeof foundry;
 
 export const getChainById = (id: string) => {
   switch (id) {
-    case '84532':
+    case 'base-sepolia':
       return baseSepolia;
-    case '31337':
+    case 'foundry':
       return foundry;
     default:
       throw new Error(`Chain with id ${id} not found`);
