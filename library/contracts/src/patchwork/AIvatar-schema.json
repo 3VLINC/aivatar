@@ -1,0 +1,20 @@
+{
+  "$schema": "https://patchwork.dev/schema/patchwork-metadata.schema.json",
+  "scopeName": "aivatar",
+  "name": "AIvatar",
+  "symbol": "AIVATAR",
+  "schemaURI": "https://aivatar.3vl.ca/erc721/AIVATAR/schema.json",
+  "imageURI": "https://aivatar.3vl.ca/erc721/AIVATAR/image/{tokenID}.svg",
+  "fields": [
+    {
+      "id": 0,
+      "key": "expression",
+      "type": "uint8",
+      "arrayLength": 1,
+      "description": "The facial expression",
+      "visibility": "public",
+      "slot": 0,
+      "offset": 0
+    }
+  ]
+}

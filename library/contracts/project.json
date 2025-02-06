@@ -1,0 +1,96 @@
+{
+  "name": "contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "library/contracts",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "pdk": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node ../../node_modules/.bin/pdk generate contracts patchwork.config.ts --output ./src/patchwork",
+        "cwd": "library/contracts"
+      }
+    },
+    "wagmi": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "wagmi generate",
+        "cwd": "library/contracts"
+      }
+    },
+    "compile": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "foundry": {
+          "cwd": "library/contracts",
+          "command": "forge build --sizes"
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "foundry": {
+          "command": "anvil --block-time 2 --chain-id 31337 --fork-url $NX_ANVIL_FORK_URL"
+        }
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {},
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "foundry": {
+          "cwd": "library/contracts",
+          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 31337 --broadcast --fork-url http://localhost:8545 --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+        },
+        "baseSepolia": {
+          "cwd": "library/contracts",
+          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 84532 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_SEPOLIA_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+        },
+        "base": {
+          "cwd": "library/contracts",
+          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 8453 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+        }
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {},
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "baseSepolia": {
+          "cwd": "library/contracts",
+          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 84532 --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_SEPOLIA_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+        },
+        "base": {
+          "cwd": "library/contracts",
+          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 8453 --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+        }
+      }
+    },
+    "explore": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "foundry": {
+          "cwd": "library/contracts",
+          "command": "docker run -p 80:80 otterscan/otterscan"
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "foundry",
+      "configurations": {
+        "foundry": {
+          "cwd": "library/contracts",
+          "command": "forge test --chain-id 84532 --fork-url $NX_ANVIL_FORK_URL --fork-block-number 8554799 --ffi"
+        }
+      }
+    }
+  }
+}

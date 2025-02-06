@@ -1,0 +1,22 @@
+{
+  "scopeName": "aivatar",
+  "name": "TestFragment",
+  "symbol": "TESTFRAG",
+  "schemaURI": "https://aivatar.3vl.ca/erc721/characters/eepmonkey/schema.json",
+  "imageURI": "https://aivatar.3vl.ca/erc721/characters/eepmonkey/{tokenID}.svg",
+  "features": ["fragmentsingle", "mintable"],
+  "fields": [
+    {
+      "id": 1,
+      "key": "buddy",
+      "type": "literef",
+      "description": "Buddy"
+    },
+    {
+      "id": 2,
+      "key": "flavor",
+      "type": "uint8",
+      "description": "Flavor"
+    }
+  ]
+}

@@ -17,6 +17,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "@aivatar/drizzle": ["../../library/drizzle/src/index.ts"],
+      "@aivatar/contracts": ["../../library/contracts/index.ts"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
