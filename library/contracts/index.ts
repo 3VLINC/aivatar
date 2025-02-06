@@ -1,8 +1,8 @@
 import { baseSepolia, foundry } from 'viem/chains';
 import Data_DeployAivatar_84532 from './broadcast/0_InitialDeploy.s.sol/84532/c0406226-latest.json';
 import { aIvatarAbi as aivatarAbi, patchworkProtocolAbi } from './wagmi';
-import { Broadcast, Transaction, Receipt } from './interface';
-import { Hex } from 'viem';
+import { type Broadcast, type Transaction, type Receipt } from './interface';
+import { type Hex } from 'viem';
 import AIvatarSchema from './src/patchwork/AIvatar-schema.json';
 
 export enum Expression {
@@ -14,7 +14,6 @@ export enum Expression {
   Relief,
   Amusement,
   Inspiration,
-  Confidence,
   Awe,
   Anger,
   Sadness,
