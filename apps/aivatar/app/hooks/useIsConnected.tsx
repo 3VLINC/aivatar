@@ -10,7 +10,7 @@ export const useIsConnected = (fid: string) => {
       return;
     }
     setIsLoading(true);
-    await axios
+    return axios
       .post('/api/isConnected', {
         fid,
       })

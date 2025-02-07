@@ -1,20 +1,17 @@
 import { useContext, type PropsWithChildren } from 'react';
 import { useAppContext } from '../AppContext';
 import type { AppUser } from '~/interface';
-import { useUserResolver } from './hooks/useUserResolver';
 import { AuthContext } from './Auth.context';
 import { WebAuthContext } from './components/WebAuthContext';
+import { FrameAuthContext } from './components/FrameAuthContext';
 
 export const Auth = ({ children }: PropsWithChildren) => {
   const appContext = useAppContext();
-  const user = useUserResolver();
 
   if (appContext.type === 'web') {
     return <WebAuthContext>{children}</WebAuthContext>;
   } else {
-    return (
-      <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
-    );
+    return <FrameAuthContext ctx={appContext}>{children}</FrameAuthContext>;
   }
 };
 
