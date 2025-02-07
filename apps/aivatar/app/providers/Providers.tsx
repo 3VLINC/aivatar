@@ -3,10 +3,11 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import { useConfig } from './Config';
 import NeynarProvider from './Neynar';
-import { Preload } from './Preload';
+import { AppContextProvider } from './AppContext';
 import { HeroUIProvider } from '@heroui/react';
-import { Auth } from './Auth';
+import { Auth } from './Auth/Auth';
 import { AuthKitProvider } from '@farcaster/auth-kit';
+import { RestoredUserProvider } from './RestoredUser';
 
 export const Providers = ({ children }: PropsWithChildren) => {
   const [ClientComponent, setClientComponent] = useState<React.ComponentType<{
@@ -36,11 +37,13 @@ export const Providers = ({ children }: PropsWithChildren) => {
     <HeroUIProvider>
       <NeynarProvider>
         <ClientComponent>
-          <Preload>
+          <AppContextProvider>
             <AuthKitProvider config={auth}>
-              <Auth>{children}</Auth>
+              <RestoredUserProvider>
+                <Auth>{children}</Auth>
+              </RestoredUserProvider>
             </AuthKitProvider>
-          </Preload>
+          </AppContextProvider>
         </ClientComponent>
       </NeynarProvider>
     </HeroUIProvider>

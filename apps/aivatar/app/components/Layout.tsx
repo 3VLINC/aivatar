@@ -6,8 +6,10 @@ import {
   NavbarItem,
 } from '@heroui/react';
 import type { PropsWithChildren } from 'react';
+import { useLogout } from '~/providers/Auth/Auth';
 
 export default function ({ children }: PropsWithChildren) {
+  const logout = useLogout();
   return (
     <div className=" w-full h-full">
       <div className="bg-primary h-full flex-grow flex flex-col">
@@ -19,7 +21,13 @@ export default function ({ children }: PropsWithChildren) {
             className="hidden sm:flex gap-4"
             justify="center"
           ></NavbarContent>
-          <NavbarContent justify="end"></NavbarContent>
+          <NavbarContent justify="end">
+            {logout ? (
+              <NavbarItem>
+                <Link onClick={logout}>Logout</Link>
+              </NavbarItem>
+            ) : null}
+          </NavbarContent>
         </Navbar>
         <main className="hero-content flex-grow overflow-auto">{children}</main>
         <footer className="hero-footer h-16 p-8">

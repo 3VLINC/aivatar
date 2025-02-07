@@ -1,12 +1,13 @@
 import type { Hex } from "viem";
 
-export interface FarcasterUser {
-  signer_uuid: string;
-  public_key: string;
-  status: string;
-  signer_approval_url?: string;
-  fid?: string;
-}
+
+export type AppUser = {
+  fid: string;
+  pfpUrl?: string;
+  username?: string;
+  displayName?: string;
+};
+
 
 export interface SignedKeyResult {
   deadline: number;

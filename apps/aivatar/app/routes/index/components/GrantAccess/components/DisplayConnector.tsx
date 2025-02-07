@@ -1,30 +1,57 @@
 import { QRCode } from '@farcaster/auth-kit';
-import { Modal, ModalBody, ModalContent } from '@heroui/react';
+import {
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  useDisclosure,
+} from '@heroui/react';
 import type { Signer } from '@neynar/nodejs-sdk/build/api';
+import { useAppContext } from '~/providers/AppContext';
 
 export function DisplayConnector({
-  signer: { signer_approval_url },
+  signer,
+  onClose,
 }: {
-  signer: Signer;
+  signer: Signer | null;
+  onClose: () => void;
 }) {
-  if (!signer_approval_url) {
-    throw new Error('No signer approval URL provided');
+  const { type } = useAppContext();
+
+  if (!signer || !signer.signer_approval_url) {
+    return null;
   }
+
+  const { isOpen, onOpenChange } = useDisclosure({
+    defaultOpen: true,
+    onChange(isOpen) {
+      if (!isOpen) {
+        onClose();
+      }
+    },
+  });
+
+  let content: JSX.Element | null = null;
+
+  if (type === 'frame') {
+    content = (
+      <Link target="_blank" href={signer.signer_approval_url}>
+        Click here to go to the signer approval url:{' '}
+      </Link>
+    );
+  } else {
+    content = <QRCode uri={signer.signer_approval_url} />;
+  }
+
   return (
-    <Modal className="bg-white" isOpen={true}>
-      <ModalBody>
-        <ModalContent>
-          <QRCode uri={signer_approval_url} />
-          <div>OR</div>
-          <a
-            href={signer_approval_url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Click here to view the signer URL (on mobile)
-          </a>
-        </ModalContent>
-      </ModalBody>
+    <Modal className="bg-gray-900" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        <ModalBody>
+          <div className="flex flex-row">
+            <div className="bg-white flex-1">{content}</div>
+          </div>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 }

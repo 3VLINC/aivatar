@@ -44,9 +44,10 @@ export function loader({ request }: Route.LoaderArgs): ConfigContextProps {
 
   const siweUri = new URL(`${url.protocol}//${url.hostname}`);
   siweUri.protocol = 'https';
-  console.log('siweUri', siweUri.toString());
+
   return {
     neynarClientId,
+    authStorageKey: 'farcasterUser',
     auth: {
       rpcUrl: 'https://mainnet.optimism.io',
       domain: url.hostname,

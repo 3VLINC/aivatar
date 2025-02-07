@@ -1,20 +1,21 @@
 import { db, users, webhooks, webhookSecrets } from '@aivatar/drizzle';
-import type { LoaderFunctionArgs } from 'react-router';
 import { getNeynarClient } from '~/clients/getNeynarSdk';
 import { eq, and } from 'drizzle-orm';
-import type { FarcasterUser } from '~/interface';
+import type { Route } from './+types/storeSigner';
+import type { Signer } from '@neynar/nodejs-sdk/build/api';
 
-export async function loader({
-  request,
-}: LoaderFunctionArgs): Promise<FarcasterUser> {
+export async function action({ request }: Route.ActionArgs): Promise<Signer> {
+  const json = await request.json();
+
+  if (!json.signerUuid) {
+    throw new Error('signerUuid is required');
+  }
+
+  const { signerUuid } = json;
+
   const url = new URL(request.url);
-  const signerUuid = url.searchParams.get('signer_uuid');
 
   const webhookUrl = new URL(`https://${url.host}/webhooks/cast.created`);
-
-  if (!signerUuid) {
-    throw new Error('signer_uuid is required');
-  }
 
   const neynarClient = await getNeynarClient();
 
@@ -95,6 +96,6 @@ export async function loader({
     public_key: signer.public_key,
     status: signer.status,
     signer_approval_url: signer.signer_approval_url,
-    fid: signer.fid.toString(),
+    fid: signer.fid,
   };
 }

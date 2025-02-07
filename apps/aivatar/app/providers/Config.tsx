@@ -1,6 +1,7 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
 
 export interface ConfigContextProps {
+  authStorageKey: string;
   neynarClientId?: string;
   auth?: {
     rpcUrl: string;

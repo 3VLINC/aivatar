@@ -1,9 +1,10 @@
-import { NeynarContextProvider, Theme } from "@neynar/react";
-import { useConfig } from "./Config";
-import { useState, type PropsWithChildren } from "react";
-import type { INeynarAuthenticatedUser } from "@neynar/react/dist/types/common";
+import { NeynarContextProvider, Theme } from '@neynar/react';
+import { useConfig } from './Config';
+import { useState, type PropsWithChildren } from 'react';
+import type { INeynarAuthenticatedUser } from '@neynar/react/dist/types/common';
+import { createContext, useContext } from 'react';
 
-import { createContext, useContext } from "react";
+// TODO: maybe deprecate?
 
 interface NeynarUserContextType {
   user: INeynarAuthenticatedUser | undefined;
@@ -27,7 +28,7 @@ export const NeynarUserProvider = ({
 export const useNeynarUser = (): NeynarUserContextType => {
   const context = useContext(NeynarUserContext);
   if (!context) {
-    throw new Error("useNeynarUser must be used within a NeynarUserProvider");
+    throw new Error('useNeynarUser must be used within a NeynarUserProvider');
   }
   return context;
 };
@@ -50,11 +51,9 @@ export default function NeynarProvider({
         defaultTheme: Theme.Light,
         eventsCallbacks: {
           onAuthSuccess: (data) => {
-            
             setUser(data.user);
           },
           onSignout: () => {
-            
             setUser(undefined);
           },
         },

@@ -11,9 +11,10 @@ export default [
   ...prefix('api', [
     route('generateSigner', './routes/api/generateSigner.tsx'),
     route('updateLocation', './routes/api/updateLocation.tsx'),
-    route('getSigner', './routes/api/getSigner.tsx'),
+    route('storeSigner', './routes/api/storeSigner.tsx'),
     route('getUserData', './routes/api/getUserData.tsx'),
     route('invokeSentimentAgent', './routes/api/invokeSentimentAgent.tsx'),
+    route('isConnected', './routes/api/isConnected.tsx'),
   ]),
   ...prefix('webhooks', [
     route('castCreated', './routes/webhooks/castCreated.tsx'),
