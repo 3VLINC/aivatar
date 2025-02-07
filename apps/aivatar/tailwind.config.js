@@ -7,9 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1E40AF', // Random primary color
-        secondary: '#F59E0B', // Random secondary color
-        accent: '#10B981', // Random accent color
+        // primary: '#1E40AF', // Random primary color
+        // secondary: '#F59E0B', // Random secondary color
+        // accent: '#10B981', // Random accent color
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -31,6 +31,6 @@ module.exports = {
       },
     },
   },
-  darkMode: 'class',
+  // darkMode: 'class',
   plugins: [heroui()],
 };

@@ -11,7 +11,7 @@ import { useLogout } from '~/providers/Auth/Auth';
 export default function ({ children }: PropsWithChildren) {
   const logout = useLogout();
   return (
-    <div className=" w-full h-full">
+    <div className="dark text-foreground w-full h-full">
       <div className="bg-primary h-full flex-grow flex flex-col">
         <Navbar>
           <NavbarBrand>
