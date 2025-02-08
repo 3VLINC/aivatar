@@ -9,13 +9,13 @@ export function loader() {
     },
     frame: {
       version: '1',
-      name: 'Example Frame',
+      name: 'AIVATAR',
       iconUrl: 'https://aivatar.3vl.ca/icon.png',
       homeUrl: 'https://aivatar.3vl.ca',
       imageUrl: 'https://aivatar.3vl.ca/image.png',
-      buttonTitle: 'Check this out',
+      buttonTitle: 'YOUR AGENTIC AVATAR',
       splashImageUrl: 'https://aivatar.3vl.ca/splash.png',
-      splashBackgroundColor: '#eeccff',
+      splashBackgroundColor: '#f7d932',
       webhookUrl: 'https://aivatar.3vl.ca/api/webhook',
     },
   };
