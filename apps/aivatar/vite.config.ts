@@ -8,7 +8,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   server: {
-    allowedHosts: ["dev.3vl.ca", "localhost"],
+    allowedHosts: ["dev.3vl.ca", "aivatar.3vl.ca", "localhost"],
     https: {
       key: readFileSync(resolve(__dirname, './dev/origin.key')),
       cert: readFileSync(resolve(__dirname, './dev/origin.cert')),

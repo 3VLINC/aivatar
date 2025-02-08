@@ -48,7 +48,7 @@ export async function invokeSentimentAgent(
 
     const neynar = await getNeynarClient();
 
-    const pfpUrl = `https://dev.3vl.ca/erc721/AIVATAR/image/${tokenId}.png?hash=${hash}`;
+    const pfpUrl = `https://aivatar.3vl.ca/erc721/AIVATAR/image/${tokenId}.png?hash=${hash}`;
 
     console.log(pfpUrl);
 

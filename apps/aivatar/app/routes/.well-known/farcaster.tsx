@@ -10,13 +10,13 @@ export function loader() {
     frame: {
       version: '1',
       name: 'AIVATAR',
-      iconUrl: 'https://dev.3vl.ca/icon.png',
-      homeUrl: 'https://dev.3vl.ca',
-      imageUrl: 'https://dev.3vl.ca/image.png',
+      iconUrl: 'https://aivatar.3vl.ca/icon.png',
+      homeUrl: 'https://aivatar.3vl.ca',
+      imageUrl: 'https://aivatar.3vl.ca/image.png',
       buttonTitle: 'Check this out',
-      splashImageUrl: 'https://dev.3vl.ca/splash.png',
+      splashImageUrl: 'https://aivatar.3vl.ca/splash.png',
       splashBackgroundColor: '#eeccff',
-      webhookUrl: 'https://dev.3vl.ca/api/webhook',
+      webhookUrl: 'https://aivatar.3vl.ca/api/webhook',
     },
   };
 }
