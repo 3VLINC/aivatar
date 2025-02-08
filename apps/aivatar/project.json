@@ -5,5 +5,39 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "typecheck": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "typecheck"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["typecheck"],
+      "options": {
+        "engine": "docker",
+        "push": true,
+        "metadata": {
+          "images": ["threevl/aivatar"],
+          "platforms": ["linux/amd64"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["container"],
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "echo 'Deployed!'"
+      }
+    }
   }
 }
