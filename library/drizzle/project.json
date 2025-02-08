@@ -18,6 +18,11 @@
       "options": {
         "cwd": "{projectRoot}/src",
         "command": "npx drizzle-kit migrate --config drizzle.config.ts"
+      },
+      "configurations": {
+        "staging": {
+          "command": "npx drizzle-kit migrate --config drizzle.config.ts"
+        }
       }
     },
     "db:check": {
