@@ -45,6 +45,7 @@ ENV OPENAI_API_KEY=
 
 COPY --chown=node:node --from=builder /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=builder /usr/src/app/apps/aivatar/build ./build
+COPY --chown=node:node --from=builder /usr/src/app/apps/aivatar/package.json ./package.json
 
 USER node
 
