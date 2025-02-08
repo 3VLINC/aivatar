@@ -5,6 +5,7 @@ import { useRestoredUser } from '~/providers/RestoredUser';
 import type { FrameContext } from '~/providers/AppContext';
 import { Button } from '@heroui/react';
 import SvgPosJoy from '~/svg/Joy';
+import Layout from '~/components/Layout';
 
 export const FrameAuthContext = ({
   children,
@@ -39,20 +40,22 @@ export const FrameAuthContext = ({
   return (
     <AuthContext.Provider value={{ user }}>
       {!user ? (
-        <div className="flex flex-col items-center justify-center gap-8">
-          <SvgPosJoy height={128} width={128} />
-          <p className="text-center">
-            Create your AGENTIC PFP today! Get started by connecting your
-            farcaster account.
-          </p>
-          <Button
-            className="uppercase p-4 bg-purple-500 rounded text-lg"
-            variant="solid"
-            onPress={handleSignIn}
-          >
-            Sign In
-          </Button>
-        </div>
+        <Layout>
+          <div className="flex flex-col items-center justify-center gap-8">
+            <SvgPosJoy height={128} width={128} />
+            <p className="text-center">
+              Create your AGENTIC PFP today! Get started by connecting your
+              farcaster account.
+            </p>
+            <Button
+              className="uppercase p-4 bg-purple-500 rounded text-lg"
+              variant="solid"
+              onPress={handleSignIn}
+            >
+              Sign In
+            </Button>
+          </div>
+        </Layout>
       ) : (
         children
       )}
