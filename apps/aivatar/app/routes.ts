@@ -25,6 +25,6 @@ export default [
     route(':symbol/token/:tokenId.json', './routes/erc721/token.tsx'),
   ]),
   ...prefix('.well-known', [
-    route('farcaster.json', './routes/.well-known/farcaster.tsx'),
+    route('farcaster.json', './routes/well-known/farcaster.tsx'),
   ])
 ] satisfies RouteConfig;
