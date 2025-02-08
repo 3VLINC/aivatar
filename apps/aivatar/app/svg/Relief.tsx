@@ -3,10 +3,10 @@ const SvgPosRelief = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     id="Layer_2"
-    width={651.18}
-    height={679.77}
+    width={776.18}
+    height={804.77}
     data-name="Layer 2"
-    viewBox="0 0 651.18 679.77"
+    viewBox="-75 -75 776.18 804.77"
     {...props}
   >
     <defs>

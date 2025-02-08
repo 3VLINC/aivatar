@@ -6,7 +6,6 @@ import type { Route } from './+types/index';
 import { useIsConnected } from '~/hooks/useIsConnected';
 import { useUser } from '~/providers/Auth/Auth';
 import { useCallback } from 'react';
-import {} from 'wagmi';
 
 export default function (_: Route.ComponentProps) {
   const user = useUser();
