@@ -45,15 +45,15 @@
       "configurations": {
         "foundry": {
           "cwd": "library/contracts",
-          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 31337 --broadcast --fork-url http://localhost:8545 --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+          "command": "forge script ./script/1_ChangeMintFee.s.sol:ChangeMintFee_1 --chain-id 31337 --broadcast --fork-url http://localhost:8545 --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
         },
         "baseSepolia": {
           "cwd": "library/contracts",
-          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 84532 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_SEPOLIA_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+          "command": "forge script ./script/1_ChangeMintFee.s.sol:ChangeMintFee_1 --chain-id 84532 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_SEPOLIA_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
         },
         "base": {
           "cwd": "library/contracts",
-          "command": "forge script ./script/0_InitialDeploy.s.sol:InitialDeploy_0 --chain-id 8453 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
+          "command": "forge script ./script/1_ChangeMintFee.s.sol:ChangeMintFee_1 --chain-id 8453 --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY --fork-url $QUICKNODE_BASE_RPC_URL --sig $(cast calldata \"run()\") --account=meeemor --froms $SENDER --sender $SENDER"
         }
       }
     },

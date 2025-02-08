@@ -3,8 +3,6 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import { useConfig } from './Config';
 import NeynarProvider from './Neynar';
-import { AppContextProvider } from './AppContext';
-import { HeroUIProvider } from '@heroui/react';
 import { Auth } from './Auth/Auth';
 import { AuthKitProvider } from '@farcaster/auth-kit';
 import { RestoredUserProvider } from './RestoredUser';
@@ -34,18 +32,14 @@ export const Providers = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <HeroUIProvider>
-      <NeynarProvider>
-        <ClientComponent>
-          <AppContextProvider>
-            <AuthKitProvider config={auth}>
-              <RestoredUserProvider>
-                <Auth>{children}</Auth>
-              </RestoredUserProvider>
-            </AuthKitProvider>
-          </AppContextProvider>
-        </ClientComponent>
-      </NeynarProvider>
-    </HeroUIProvider>
+    <NeynarProvider>
+      <ClientComponent>
+        <AuthKitProvider config={auth}>
+          <RestoredUserProvider>
+            <Auth>{children}</Auth>
+          </RestoredUserProvider>
+        </AuthKitProvider>
+      </ClientComponent>
+    </NeynarProvider>
   );
 };

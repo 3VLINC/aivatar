@@ -1,11 +1,10 @@
-import { bigint, pgSchema, varchar, timestamp } from 'drizzle-orm/pg-core';
+import { bigint, pgSchema, varchar, timestamp, integer } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 export const app = pgSchema('app');
 
 export const webhooks = app.table('Webhook', {
   id: varchar('id').primaryKey(),
-  fid: bigint('fid', { mode: 'bigint' }),
   type: varchar('type').$type<'cast.created'>(),
 })
 
@@ -42,11 +41,17 @@ export const casts = app.table('Cast', {
   created_at: timestamp('created_at'),
 });
 
+export const tokens = app.table('Tokens', {
+  tokenId: bigint('tokenId', { mode: 'bigint' }).primaryKey(),
+  address: varchar('address'),
+  expression: integer('expression'),
+});
+
 export const castUser = relations(casts, ({ one }) => ({
   user: one(users, {
     fields: [casts.fid],
     references: [users.fid],
-    
+
   }),
 }));
 
@@ -54,13 +59,3 @@ export const usersCasts = relations(users, ({ many }) => ({
   casts: many(casts),
 }));
 
-export const webhookUser = relations(webhooks, ({ one }) => ({
-  user: one(users, {
-    fields: [webhooks.fid],
-    references: [users.fid],
-  }),
-}));
-
-export const usersWebhooks = relations(users, ({ many }) => ({
-  webhooks: many(webhooks),
-}));

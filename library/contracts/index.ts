@@ -6,32 +6,42 @@ import { type Hex } from 'viem';
 import AIvatarSchema from './src/patchwork/AIvatar-schema.json';
 
 export enum Expression {
-  Joy = 1,
-  Gratitude,
-  Love,
-  Pride,
-  Hope,
-  Relief,
-  Amusement,
-  Inspiration,
-  Awe,
-  Anger,
-  Sadness,
-  Fear,
-  Jealousy,
-  Frustration,
-  Loneliness,
-  Guilt,
-  Disgust,
-  Surprise,
-  Nostalgia,
+  Joy = 0,
+  Gratitude = 1,
+  Love = 2,
+  Pride = 3,
+  Hope = 4,
+  Relief = 5,
+  Amusement = 6,
+  Inspiration = 7,
+  Awe = 8,
+  Anger = 9,
+  Sadness = 10,
+  Fear = 11,
+  Jealousy = 12,
+  Frustration = 13,
+  Loneliness = 14,
+  Guilt = 15,
+  Disgust = 16,
+  Surprise = 17,
+  Nostalgia = 18,
 }
 
 export type PatchworkProtocolAbi = typeof patchworkProtocolAbi;
 
 export type SupportedChains = typeof baseSepolia | typeof foundry;
 
-export const getChainById = (id: string) => {
+export const getChainById = (id: number) => {
+  switch (id) {
+    case 84532:
+      return baseSepolia;
+    case 31337:
+      return foundry;
+    default:
+      throw new Error(`Chain with id ${id} not found`);
+  }
+}
+export const getChainByIdentifier = (id: string) => {
   switch (id) {
     case 'base-sepolia':
       return baseSepolia;

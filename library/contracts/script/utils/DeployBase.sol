@@ -9,6 +9,8 @@ import 'forge-std/console.sol';
 import {AIvatar} from '../../src/patchwork/AIvatar.sol';
 
 contract DeployBase is Script {
+    string constant SCOPE = 'aivatar';
+
     string constant ENV_ADMIN_ADDRESS = 'ADMIN_ADDRESS';
     string constant ENV_PATCHWORK_ADDRESS = 'PATCHWORK_ADDRESS';
     string constant ENV_AIVATAR_ADDRESS = 'AIVATAR_ADDRESS';

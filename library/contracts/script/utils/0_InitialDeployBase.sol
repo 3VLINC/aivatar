@@ -11,8 +11,6 @@ import {DeployBase} from './DeployBase.sol';
 import {Ownable} from '@openzeppelin/contracts/access/Ownable.sol';
 
 contract InitialDeployBase_0 is DeployBase {
-    string constant SCOPE = 'aivatar';
-
     function deploy() public {
         aivatar = new AIvatar(
             patchworkAddress(),

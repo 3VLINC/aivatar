@@ -15,7 +15,7 @@ export async function action({ request }: Route.ActionArgs): Promise<Signer> {
 
   const url = new URL(request.url);
 
-  const webhookUrl = new URL(`https://${url.host}/webhooks/cast.created`);
+  const webhookUrl = new URL(`https://${url.host}/webhooks/castCreated`);
 
   const neynarClient = await getNeynarClient();
 
@@ -28,19 +28,24 @@ export async function action({ request }: Route.ActionArgs): Promise<Signer> {
   const castCreateWebhook = await db
     .select()
     .from(webhooks)
-    .where(
-      and(
-        eq(webhooks.fid, BigInt(signer.fid)),
-        eq(webhooks.type, 'cast.created')
-      )
-    )
+    .where(and(eq(webhooks.type, 'cast.created')))
     .execute();
 
   const hasCastCreateWebhook = castCreateWebhook.length > 0;
 
+  // neynarClient.updateWebhook({
+  //   name: `CastCreated-${signer.fid}`,
+  //   url: webhookUrl.toString(),
+  //   subscription: {
+  //     'cast.created': {
+  //       author_fids: [signer.fid],
+  //     },
+  //   },
+  // })
+
   if (!hasCastCreateWebhook) {
     const publishWebhookResult = await neynarClient.publishWebhook({
-      name: `CastCreated-${signer.fid}`,
+      name: `CastCreated`,
       url: webhookUrl.toString(),
       subscription: {
         'cast.created': {
@@ -48,13 +53,12 @@ export async function action({ request }: Route.ActionArgs): Promise<Signer> {
         },
       },
     });
+
     if (!publishWebhookResult) {
-      throw new Error(
-        `Failed to publish cast.created webhook for signer: ${signerUuid}\n`
-      );
+      throw new Error(`Failed to publish cast.created webhook\n`);
     } else if (!publishWebhookResult.webhook?.webhook_id) {
       throw new Error(
-        `Failed to publish cast.created webhook for signer: ${signerUuid}\n reason: webhook_id not found`
+        `Failed to publish cast.created webhook  webhook_id not found`
       );
     }
 
@@ -62,7 +66,6 @@ export async function action({ request }: Route.ActionArgs): Promise<Signer> {
     if (webhookId) {
       await db.insert(webhooks).values({
         id: webhookId,
-        fid: BigInt(signer.fid),
         type: 'cast.created',
       });
 

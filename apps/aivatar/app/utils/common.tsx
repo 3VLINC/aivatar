@@ -1,4 +1,5 @@
 import { Expression, schemas } from '@aivatar/contracts';
+import { db, tokens } from '@aivatar/drizzle';
 import { createHash } from 'crypto';
 import { renderToString } from 'react-dom/server';
 import type { OutputMetadata, TokenSymbol } from '~/interface';
@@ -19,6 +20,7 @@ import Love from '~/svg/Love';
 import Pride from '~/svg/Pride';
 import Relief from '~/svg/Relief';
 import Sadness from '~/svg/Sadness';
+import { eq } from 'drizzle-orm';
 
 export const coerceStringToTokenSymbol = (symbol: string): TokenSymbol => {
   if (symbol === 'AIVATAR') {
@@ -29,6 +31,7 @@ export const coerceStringToTokenSymbol = (symbol: string): TokenSymbol => {
 };
 
 export const getAivatarExpression = (expression: Expression) => {
+  console.log('expression value is', expression);
   switch (expression) {
     case Expression.Joy:
       return <Joy />;
@@ -76,9 +79,67 @@ export const getErc721Schema = (symbol: TokenSymbol) => {
   }
 };
 
-// TODO: fetch from database
+export const mapExpressionStringToEnum = (expression: string): Expression => {
+  switch (expression) {
+    case 'Joy':
+      return Expression.Joy;
+    case 'Gratitude':
+      return Expression.Gratitude;
+    case 'Love':
+      return Expression.Love;
+    case 'Pride':
+      return Expression.Pride;
+    case 'Hope':
+      return Expression.Hope;
+    case 'Relief':
+      return Expression.Relief;
+    case 'Amusement':
+      return Expression.Amusement;
+    case 'Inspiration':
+      return Expression.Inspiration;
+    case 'Awe':
+      return Expression.Awe;
+    case 'Anger':
+      return Expression.Anger;
+    case 'Sadness':
+      return Expression.Sadness;
+    case 'Fear':
+      return Expression.Fear;
+    case 'Jealousy':
+      return Expression.Jealousy;
+    case 'Frustration':
+      return Expression.Frustration;
+    case 'Loneliness':
+      return Expression.Loneliness;
+    case 'Guilt':
+      return Expression.Guilt;
+    case 'Disgust':
+      return Expression.Disgust;
+    case 'Surprise':
+      return Expression.Surprise;
+    case 'Nostalgia':
+      return Expression.Nostalgia;
+    default:
+      throw new Error(`Invalid expression string: ${expression}`);
+  }
+};
+
 export const getExpression = async (tokenId: bigint) => {
-  return Expression.Amusement;
+  const result = await db
+    .select({
+      expression: tokens.expression,
+    })
+    .from(tokens)
+    .where(eq(tokens.tokenId, tokenId))
+    .then((results) => results[0].expression);
+
+  if (!result) {
+    return Expression.Joy;
+  } else {
+    return Expression[
+      Expression[result] as unknown as any
+    ] as unknown as Expression;
+  }
 };
 
 export const getTokenImage = async (

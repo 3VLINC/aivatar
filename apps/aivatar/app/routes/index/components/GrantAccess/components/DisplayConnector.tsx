@@ -35,20 +35,28 @@ export function DisplayConnector({
 
   if (type === 'frame') {
     content = (
-      <Link target="_blank" href={signer.signer_approval_url}>
-        Click here to go to the signer approval url:{' '}
-      </Link>
+      <>
+        <QRCode uri={signer.signer_approval_url} />
+        <Link target="_blank" href={signer.signer_approval_url}>
+          Click here to go to the signer approval url:{' '}
+        </Link>
+      </>
     );
   } else {
     content = <QRCode uri={signer.signer_approval_url} />;
   }
 
   return (
-    <Modal className="bg-gray-900" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal
+      className="bg-gray-600 rounded-sm"
+      placement="center"
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
       <ModalContent>
         <ModalBody>
-          <div className="flex flex-row">
-            <div className="bg-white flex-1">{content}</div>
+          <div className="flex flex-row p-4">
+            <div className="flex-1">{content}</div>
           </div>
         </ModalBody>
       </ModalContent>

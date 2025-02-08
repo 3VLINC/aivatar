@@ -7,12 +7,15 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
 } from 'react-router';
+import { useNavigate, useHref } from 'react-router';
 
 import type { Route } from './+types/root';
 import './app.css';
 import '@farcaster/auth-kit/styles.css';
 import { Providers } from './providers/Providers';
 import { ConfigProvider, type ConfigContextProps } from './providers/Config';
+import { AppContextProvider } from './providers/AppContext';
+import { HeroUIProvider } from '@heroui/react';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -58,10 +61,12 @@ export function loader({ request }: Route.LoaderArgs): ConfigContextProps {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const value = useRouteLoaderData<ReturnType<typeof loader>>('root');
-
+  const navigate = useNavigate();
   const content = value ? (
     <ConfigProvider value={value}>
-      <Providers children={children} />
+      <AppContextProvider>
+        <Providers children={children} />
+      </AppContextProvider>
     </ConfigProvider>
   ) : null;
   return (
@@ -73,7 +78,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {content}
+        <HeroUIProvider navigate={navigate} useHref={useHref}>
+          <main className="dark text-foreground bg-background w-full h-full">
+            {content}
+          </main>
+        </HeroUIProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

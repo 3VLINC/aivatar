@@ -1,19 +1,16 @@
 import Layout from '../../components/Layout';
 import SvgPosJoy from '~/svg/Joy';
 import { GrantAccess } from './components/GrantAccess/GrantAccess';
-import { Dashboard } from './components/Dashboard';
+import { Dashboard } from './components/Dashboard/Dashboard';
 import type { Route } from './+types/index';
 import { useIsConnected } from '~/hooks/useIsConnected';
 import { useUser } from '~/providers/Auth/Auth';
 import { useCallback } from 'react';
+import {} from 'wagmi';
 
 export default function (_: Route.ComponentProps) {
   const user = useUser();
-  const {
-    data: isConnected,
-    loading,
-    refetch,
-  } = useIsConnected(user?.fid || '');
+  const { data: isConnected, refetch } = useIsConnected(user?.fid || '');
 
   const handleOnStored = useCallback(() => {
     refetch();
@@ -29,8 +26,8 @@ export default function (_: Route.ComponentProps) {
             <GrantAccess onStored={handleOnStored} />
           )}
         </div>
-        <div className="flex-1 text-center p-4">
-          <div className="w-full h-full flex items-center justify-center">
+        <div className="flex flex-1 text-center p-4 items-center justify-center">
+          <div className="w-full h-full max-w-[240px] max-h-[240px] flex items-center justify-center">
             <SvgPosJoy className="w-full h-full" />
           </div>
         </div>

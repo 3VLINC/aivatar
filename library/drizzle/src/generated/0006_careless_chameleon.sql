@@ -1,0 +1,1 @@
+ALTER TABLE "app"."Webhook" DROP COLUMN "fid";

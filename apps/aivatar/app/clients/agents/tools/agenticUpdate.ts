@@ -1,4 +1,4 @@
-import { Expression, getChainById, getContracts } from '@aivatar/contracts';
+import { Expression, getChainByIdentifier, getContracts } from '@aivatar/contracts';
 import { CdpWalletProvider, customActionProvider } from '@coinbase/agentkit';
 import { Wallet } from '@coinbase/coinbase-sdk';
 import z from 'zod';
@@ -27,7 +27,7 @@ export const agenticUpdate = customActionProvider<CdpWalletProvider>({
       networkId: signature.networkId,
     });
 
-    const { aivatar } = getContracts(getChainById(networkId));
+    const { aivatar } = getContracts(getChainByIdentifier(networkId));
 
     const contractInvocation = await wallet.invokeContract({
       abi: aivatar.abi,
@@ -36,7 +36,9 @@ export const agenticUpdate = customActionProvider<CdpWalletProvider>({
       args: [tokenId, expression],
     });
 
-    await contractInvocation.wait();
+    await contractInvocation.wait({
+      timeoutSeconds: 60
+    });
 
     return `The contract call was invoked updating tokenId: ${tokenId} with expression: ${expression}\n tx: ${contractInvocation.getTransactionHash()}`;
   },

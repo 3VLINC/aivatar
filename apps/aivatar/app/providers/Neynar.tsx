@@ -14,16 +14,16 @@ const NeynarUserContext = createContext<NeynarUserContextType | undefined>(
   undefined
 );
 
-export const NeynarUserProvider = ({
+export function NeynarUserProvider({
   children,
   user,
-}: PropsWithChildren<{ user: INeynarAuthenticatedUser }>) => {
+}: PropsWithChildren<{ user: INeynarAuthenticatedUser }>) {
   return (
     <NeynarUserContext.Provider value={{ user }}>
       {children}
     </NeynarUserContext.Provider>
   );
-};
+}
 
 export const useNeynarUser = (): NeynarUserContextType => {
   const context = useContext(NeynarUserContext);
@@ -33,11 +33,7 @@ export const useNeynarUser = (): NeynarUserContextType => {
   return context;
 };
 
-export default function NeynarProvider({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function NeynarProvider({ children }: PropsWithChildren) {
   const { neynarClientId: clientId } = useConfig();
   const [user, setUser] = useState<INeynarAuthenticatedUser>();
   if (!clientId) {

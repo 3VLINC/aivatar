@@ -4,7 +4,6 @@ import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import z from 'zod';
 import { getAgentConfig } from '../utils/getAgentConfig';
 
-
 export async function askWalletQuestions(message: string) {
   try {
     const config = await getAgentConfig();
@@ -22,16 +21,15 @@ export async function askWalletQuestions(message: string) {
           ),
           ...state.messages,
         ];
-      }
+      },
     });
 
-    const stream = await agent
-      .stream(
-        {
-          messages: [new HumanMessage(message)],
-        },
-        agentConfig
-      );
+    const stream = await agent.stream(
+      {
+        messages: [new HumanMessage(message)],
+      },
+      agentConfig
+    );
 
     const response: string[] = [];
 
@@ -46,7 +44,6 @@ export async function askWalletQuestions(message: string) {
     }
 
     return response.join('');
-
   } catch (error) {
     console.error('Failed to initialize agent:', error);
     throw error; // Re-throw to be handled by caller
