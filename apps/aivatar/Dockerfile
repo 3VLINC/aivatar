@@ -14,7 +14,7 @@ RUN npm i -g nx@20.4.0 npm@10.8.2
 COPY --chown=node:node . .
 
 # Install project dependencies
-RUN npm ci
+RUN npm i
 
 # Build projects
 RUN nx build aivatar
@@ -49,4 +49,4 @@ COPY --chown=node:node --from=builder /usr/src/app/apps/aivatar/build ./build
 USER node
 
 # Start the server using the production build
-CMD [ "npx", "remix-serve", "build/server/index.js" ]
+CMD [ "npm", "start"]
