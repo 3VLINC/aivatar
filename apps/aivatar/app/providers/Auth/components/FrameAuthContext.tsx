@@ -1,10 +1,10 @@
-// import { type SignIn as SignInCore } from '@farcaster/frame-sdk';
 import { AuthContext } from '../Auth.context';
 import { useUserResolver } from '../hooks/useUserResolver';
 import { useCallback, type PropsWithChildren } from 'react';
 import { useRestoredUser } from '~/providers/RestoredUser';
 import type { FrameContext } from '~/providers/AppContext';
 import { Button } from '@heroui/react';
+import SvgPosJoy from '~/svg/Joy';
 
 export const FrameAuthContext = ({
   children,
@@ -38,7 +38,24 @@ export const FrameAuthContext = ({
 
   return (
     <AuthContext.Provider value={{ user }}>
-      {!user ? <Button onPress={handleSignIn}>Sign In</Button> : children}
+      {!user ? (
+        <div className="flex flex-col items-center justify-center gap-8">
+          <SvgPosJoy height={128} width={128} />
+          <p className="text-center">
+            Create your AGENTIC PFP today! Get started by connecting your
+            farcaster account.
+          </p>
+          <Button
+            className="uppercase p-4 bg-purple-500 rounded text-lg"
+            variant="solid"
+            onPress={handleSignIn}
+          >
+            Sign In
+          </Button>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };

@@ -21,22 +21,21 @@ export function SponsoredMint({ onSuccess }: { onSuccess: () => void }) {
   }, [address]);
 
   return (
-    <div className="w-[300px] mx-auto py-4 px-2">
-      <h1 className="text-2xl font-bold text-center mb-4">Frames v2 Demo</h1>
-
-      <div>
-        <h2 className="font-2xl font-bold">Wallet</h2>
-
-        <p>Address: {address}</p>
-
-        {!result ? (
-          <Button onPress={handleMint} className="w-full mt-2">
+    <div className="flex flex-col gap-8">
+      {!result ? (
+        <>
+          <h1>To activate your AIVATAR, mint him first</h1>
+          <Button
+            className="uppercase p-4 bg-purple-500 rounded text-lg"
+            variant="solid"
+            onPress={handleMint}
+          >
             Mint
           </Button>
-        ) : (
-          <p>Congrats! You've minted your aivatar</p>
-        )}
-      </div>
+        </>
+      ) : (
+        <h1>Congrats! You've minted your AIVATAR.</h1>
+      )}
     </div>
   );
 }

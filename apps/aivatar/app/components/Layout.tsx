@@ -35,7 +35,7 @@ export default function ({ children }: PropsWithChildren) {
         </main>
         <footer className="hero-footer h-16 p-8">
           <p className="font-sans uppercase text-sm text-center text-gray-500">
-            &copy; 2025 AIVATAR. All rights reserved.
+            &copy; 2025 AIVATAR.
           </p>
         </footer>
       </div>

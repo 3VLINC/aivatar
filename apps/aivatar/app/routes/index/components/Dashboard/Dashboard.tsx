@@ -18,15 +18,15 @@ export function Dashboard() {
   if (data && data <= 0) {
     return (
       <>
-        <h1>To activate your aivatar, mint him first</h1>
         <SponsoredMint onSuccess={onSuccess} />
       </>
     );
   } else {
     return (
-      <>
-        <h1>Congrats! Your aivatar is active!</h1>
-      </>
+      <div className="flex flex-col gap-8">
+        <h1 className="text-xl">Congrats!</h1>
+        <p>Your AIVATAR is active. Now let's get casting!</p>
+      </div>
     );
   }
 }

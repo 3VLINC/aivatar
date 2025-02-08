@@ -3,6 +3,8 @@ import { AuthContext } from '../Auth.context';
 import { useUserResolver } from '../hooks/useUserResolver';
 import { useCallback, useMemo, type PropsWithChildren } from 'react';
 import { useRestoredUser } from '~/providers/RestoredUser';
+import Layout from '~/components/Layout';
+import SvgPosJoy from '~/svg/Joy';
 
 export const WebAuthContext = ({ children }: PropsWithChildren) => {
   const { setUser } = useRestoredUser();
@@ -33,7 +35,20 @@ export const WebAuthContext = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider value={{ user, logout }}>
-      {!user ? <SignInButton onSuccess={handleSuccess} /> : children}
+      {!user ? (
+        <Layout>
+          <div className="flex flex-col items-center justify-center gap-8">
+            <SvgPosJoy height={128} width={128} />
+            <p className="text-center">
+              Create your AGENTIC PFP today! Get started by connecting your
+              farcaster account.
+            </p>
+            <SignInButton onSuccess={handleSuccess} />
+          </div>
+        </Layout>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
