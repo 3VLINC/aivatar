@@ -22,6 +22,7 @@
     "@langchain/openai": "^0.4.2",
     "@neynar/nodejs-sdk": "^2.9.0",
     "@neynar/react": "^0.9.7",
+    "@nx-tools/nx-container": "^6.2.0",
     "@patchworkdev/pdk": "^0.3.0",
     "@ponder/core": "^0.7.17",
     "@ponder/utils": "^0.2.3",
