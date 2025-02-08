@@ -5,11 +5,14 @@ import { zeroAddress } from 'viem';
 export const useContractState = () => {
   const { address } = useAccount();
   const contracts = useContracts();
+
   const { data, isLoading, refetch } = useReadContract({
-    abi: contracts.aivatar.abi,
+    abi: contracts?.aivatar.abi || [],
     functionName: 'balanceOf',
     args: address ? [address] : [zeroAddress],
-    address: contracts.aivatar.address,
+    address: contracts?.aivatar.address
+      ? contracts?.aivatar.address
+      : zeroAddress,
   });
 
   if (!address) {

@@ -1,4 +1,8 @@
-export function loader() {
+import type { Route } from './+types/farcaster';
+
+export function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  url.protocol = 'https';
   return {
     accountAssociation: {
       header:
@@ -10,13 +14,13 @@ export function loader() {
     frame: {
       version: '1',
       name: 'AIVATAR',
-      iconUrl: 'https://aivatar.3vl.ca/icon.png',
-      homeUrl: 'https://aivatar.3vl.ca',
-      imageUrl: 'https://aivatar.3vl.ca/image.png',
+      iconUrl: `${url.protocol}//${url.hostname}/icon.png`,
+      homeUrl: `${url.protocol}//${url.hostname}`,
+      imageUrl: `${url.protocol}//${url.hostname}/image.png`,
       buttonTitle: 'YOUR AGENTIC AVATAR',
-      splashImageUrl: 'https://aivatar.3vl.ca/splash.png',
+      splashImageUrl: `${url.protocol}//${url.hostname}/splash.png`,
       splashBackgroundColor: '#f7d932',
-      webhookUrl: 'https://aivatar.3vl.ca/api/webhook',
+      webhookUrl: `${url.protocol}//${url.hostname}/api/webhook`,
     },
   };
 }

@@ -1,11 +1,21 @@
-import { getChainById, getContracts } from '@aivatar/contracts';
+import {
+  getChainById,
+  getContracts,
+  type SupportedChains,
+} from '@aivatar/contracts';
 import { useAccount } from 'wagmi';
 
 export const useContracts = () => {
   const { chain } = useAccount();
-  if (!chain) {
-    throw new Error('chain is not set');
+
+  let id: SupportedChains | undefined = undefined;
+  if (chain) {
+    id = getChainById(chain.id);
   }
 
-  return getContracts(getChainById(chain.id));
+  if (!id) {
+    return null;
+  }
+
+  return getContracts(id);
 };
