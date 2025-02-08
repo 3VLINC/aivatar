@@ -29,8 +29,6 @@ export const action = async ({ request }: Route.LoaderArgs) => {
     .where(and(eq(webhooks.type, 'cast.created')))
     .limit(1);
 
-  console.log('performed secret lookup', results);
-
   const firstResult = results[0];
 
   if (!firstResult || !firstResult.secret) {
